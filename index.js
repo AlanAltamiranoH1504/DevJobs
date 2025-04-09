@@ -11,6 +11,7 @@ import session from 'express-session';
 import mongoStore from 'connect-mongo'
 import {engine} from 'express-handlebars';
 import router from "./routes/index.js";
+import * as helpers from './helpers/handlebars.js';
 import {fileURLToPath} from "url"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +27,9 @@ app.listen(port, () =>{
 });
 
 //Habilitacion de handlebaers
-app.engine("handlebars", engine());
+app.engine("handlebars", engine({
+    helpers: helpers
+}));
 app.set("view engine", "handlebars");
 
 //Habilitamos archivos publicos

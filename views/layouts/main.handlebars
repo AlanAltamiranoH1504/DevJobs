@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/trix.css">
     <title>{{nombrePagina}}</title>
 </head>
 <body>
@@ -35,7 +36,7 @@
         <p class="tagline">{{tagline}}</p>
     {{/if}}
     {{#if boton}}
-        <a href="/vacantes/nueva" class="btn btn-azul">Publicar Nueva Vacante</a>
+        <a href="/devjobs/vacantes/nueva" class="btn btn-azul">Publicar Nueva Vacante</a>
     {{/if}}
 </header>
 
@@ -43,5 +44,7 @@
     <!--Contenido que se inyectarara desde los layout hijos-->
     {{{body}}}
 </div>
+
+<script src="/js/trix.js"></script>
 </body>
 </html>

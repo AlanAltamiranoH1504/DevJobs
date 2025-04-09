@@ -1,4 +1,3 @@
-
 //Rutas del home controller
 const home =  (req, res) => {
     res.render('home', {
