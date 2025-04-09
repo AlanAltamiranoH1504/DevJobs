@@ -15,4 +15,7 @@ mongoose.connection.on('error', (err) => {
     console.log(err);
 });
 
+//Importamos los modelos
+import Vacante from "../models/Vacante.js";
+
 export default mongoose;

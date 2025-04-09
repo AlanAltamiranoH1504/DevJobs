@@ -1,0 +1,58 @@
+import mongoose from "mongoose";
+const {Schema} = mongoose;
+import slug from "slug";
+import shortid from "shortid";
+
+//Definimos el schema de mongoose
+const vacanteSchema = new Schema({
+    titulo: {
+        type: String,
+        required: "El nombre de la vacante es obligatorio",
+        trim: true
+    },
+    empresa: {
+        type: String,
+        trim: true
+    },
+    ubicacion: {
+        type: String,
+        required: "La ubicación es obligatoria",
+        trim: true,
+    },
+    salario: {
+        type: String,
+        default: 0,
+        trim: true
+    },
+    contrato: {
+        type: String,
+        trim: true
+    },
+    descripcion: {
+        type:String,
+        trim: true
+    },
+    url : {
+        type: String,
+        lowercase: true
+    },
+    skills: [String],
+    candidatos: [{
+        nombre: String,
+        email: String,
+        cv: String
+    }]
+});
+
+//Generamos url antes de guardar en la db
+vacanteSchema.pre("save", function(next){
+    //Creamos url
+    const url = slug(this.titulo);
+    this.url = `${url}-${shortid.generate()}`;
+    //react-developer-123456
+    next();
+});
+
+//Exportamos el modelo
+const Vacante = mongoose.model("Vacante", vacanteSchema);
+export default Vacante;
