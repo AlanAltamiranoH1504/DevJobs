@@ -1,13 +1,24 @@
 <main class="contenedor">
     <form class="default-form" action="/devjobs/vacantes/nueva" method="post">
         <h3>Informacion General </h3>
+
+        {{#if error}}
+            <div style="color: white; text-transform: uppercase; background: red; padding-bottom: 3px; padding-top: 3px; text-align: center; font-weight: bolder; border-radius: 15px; margin-bottom: 10px" >
+                <p>{{msg}}</p>
+            </div>
+        {{/if}}
+        {{#if sucess}}
+            <div style="color: white; text-transform: uppercase; background: darkgreen; padding-bottom: 3px; padding-top: 3px; text-align: center; font-weight: bolder; border-radius: 15px; margin-bottom: 10px" >
+                <p>{{msg}}</p>
+            </div>
+        {{/if}}
         <div class="campo">
             <label for="titulo">Titulo Vacante:</label>
             <input type="text" name="titulo" id="titulo" placeholder="Titulo de la vacante" required>
         </div>
         <div class="campo">
             <label>Empresa:</label>
-            <input type="text" name="empresa" id="empresa" placeholder="Empresa reclutadora" required>
+            <input type="text" name="empresa" id="empresa" placeholder="Empresa reclutadora">
         </div>
         <div class="campo">
             <label for="ubicacion">Ubicacion:</label>
@@ -15,7 +26,7 @@
         </div>
         <div class="campo">
             <label for="salario">Salario (MX):</label>
-            <input type="text" name="salario" id="salario" placeholder="Salario de vacante" required>
+            <input type="text" name="salario" id="salario" placeholder="Salario de vacante">
         </div>
         <div class="campo">
             <label>Contrato</label>
@@ -37,73 +48,73 @@
         <h3>Conocimientos</h3>
         <div style="gap: 5px">
             <label>HTML 5</label>
-            <input type="checkbox" name="skils[]" value="html">
+            <input type="checkbox" name="skills[]" value="html">
 
             <label>CSS 3</label>
-            <input type="checkbox" name="skils[]" value="css3">
+            <input type="checkbox" name="skills[]" value="css3">
 
             <label>CSS GRID</label>
-            <input type="checkbox" name="skils[]" value="css-grid">
+            <input type="checkbox" name="skills[]" value="css-grid">
 
             <label>FLEXBOX</label>
-            <input type="checkbox" name="skils[]" value="flexbox">
+            <input type="checkbox" name="skills[]" value="flexbox">
 
             <label>JavaScript</label>
-            <input type="checkbox" name="skils[]" value="javascript">
+            <input type="checkbox" name="skills[]" value="javascript">
 
             <label>JQUERY</label>
-            <input type="checkbox" name="skils[]" value="jquery">
+            <input type="checkbox" name="skills[]" value="jquery">
 
             <label>VueJs</label>
-            <input type="checkbox" name="skils[]" value="vuejs">
+            <input type="checkbox" name="skills[]" value="vuejs">
 
             <label>ReactJS</label>
-            <input type="checkbox" name="skils[]" value="reactjs">
+            <input type="checkbox" name="skills[]" value="reactjs">
 
             <label>Redux</label>
-            <input type="checkbox" name="skils[]" value="redux">
+            <input type="checkbox" name="skills[]" value="redux">
 
             <label>Apollo</label>
-            <input type="checkbox" name="skils[]" value="apollo">
+            <input type="checkbox" name="skills[]" value="apollo">
 
             <label>TypeScript</label>
-            <input type="checkbox" name="skils[]" value="typeScript">
+            <input type="checkbox" name="skills[]" value="typeScript">
 
             <label>PHP</label>
-            <input type="checkbox" name="skils[]" value="php">
+            <input type="checkbox" name="skills[]" value="php">
 
             <label>Laravel</label>
-            <input type="checkbox" name="skils[]" value="laravel">
+            <input type="checkbox" name="skills[]" value="laravel">
 
             <label>Symfony</label>
-            <input type="checkbox" name="skils[]" value="symfony">
+            <input type="checkbox" name="skills[]" value="symfony">
 
             <label>Python</label>
-            <input type="checkbox" name="skils[]" value="python">
+            <input type="checkbox" name="skills[]" value="python">
 
             <label>Django</label>
-            <input type="checkbox" name="skils[]" value="django">
+            <input type="checkbox" name="skills[]" value="django">
 
             <label>ORM</label>
-            <input type="checkbox" name="skils[]" value="orm">
+            <input type="checkbox" name="skills[]" value="orm">
 
             <label>Sequelize</label>
-            <input type="checkbox" name="skils[]" value="sequelize">
+            <input type="checkbox" name="skills[]" value="sequelize">
 
             <label>Mongoose</label>
-            <input type="checkbox" name="skils[]" value="mongoose">
+            <input type="checkbox" name="skills[]" value="mongoose">
 
             <label>SQL</label>
-            <input type="checkbox" name="skils[]" value="sql">
+            <input type="checkbox" name="skills[]" value="sql">
 
             <label>MVC</label>
-            <input type="checkbox" name="skils[]" value="mvc">
+            <input type="checkbox" name="skills[]" value="mvc">
 
             <label>SASS</label>
-            <input type="checkbox" name="skils[]" value="sass">
+            <input type="checkbox" name="skills[]" value="sass">
 
             <label>WordPress</label>
-            <input type="checkbox" name="skils[]" value="wordpress">
+            <input type="checkbox" name="skills[]" value="wordpress">
 
         </div>
         <div class="campo centrar-horizontal">

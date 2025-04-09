@@ -26,15 +26,17 @@ const vacanteSchema = new Schema({
     },
     contrato: {
         type: String,
-        trim: true
+        trim: true,
+        required: true
     },
     descripcion: {
         type:String,
-        trim: true
+        trim: true,
+        required: true
     },
     url : {
         type: String,
-        lowercase: true
+        lowercase: true,
     },
     skills: [String],
     candidatos: [{

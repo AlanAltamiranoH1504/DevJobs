@@ -8,6 +8,7 @@ import conexion from './config/db.js'
 import express from 'express';
 import cokieParser from 'cookie-parser';
 import session from 'express-session';
+import bodyParser from "body-parser";
 import mongoStore from 'connect-mongo'
 import {engine} from 'express-handlebars';
 import router from "./routes/index.js";
@@ -48,6 +49,10 @@ app.use(session({
         ttl: 14 * 24 * 60 * 60,
     })
 }));
+
+//Habilitacion JSON
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //Uso de Routers
 app.use("/devjobs", router)
