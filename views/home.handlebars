@@ -1,38 +1,60 @@
 <main class="main lista-vacantes">
     <h2>Lista de Vacantes</h2>
 
-    <div class="vacante">
-        <div class="caja">
-            <h3>Facebook</h3>
-            <p class="puesto">React Developer</p>
+    <!--Iteracion de vacantes de la db-->
+    {{#each vacantes}}
+        <div class="vacante">
+            <div class="caja">
+                <h3>{{this.empresa}}</h3>
+                <p class="puesto">{{this.titulo}}</p>
+            </div>
+            <div class="caja">
+                <p class="etiqueta">Ubicación:</p>
+                <p class="nombre">{{this.ubicacion}}</p>
+            </div>
+            <div class="caja">
+                <p class="etiqueta">Contrato:</p>
+                <p class="nombre contrato">{{this.contrato}}</p>
+            </div>
+            <div class="caja centrar-vertical">
+                <a href="/devjobs/vacante/{{this._id}}" class="btn btn-verde">Más Información</a>
+            </div>
         </div>
-        <div class="caja">
-            <p class="etiqueta">Ubicación</p>
-            <p class="nombre">Remoto</p>
-        </div>
-        <div class="caja">
-            <p class="etiqueta">Contrato</p>
-            <p class="nombre contrato">Tiempo Completo</p>
-        </div>
-        <div class="caja centrar-vertical">
-            <a href="#" class="btn btn-verde">Más Información</a>
-        </div>
-    </div>
-    <div class="vacante">
-        <div class="caja">
-            <h3>Nomitek</h3>
-            <p class="puesto">Java Developer</p>
-        </div>
-        <div class="caja">
-            <p class="etiqueta">Ubicación</p>
-            <p class="nombre">Presencial</p>
-        </div>
-        <div class="caja">
-            <p class="etiqueta">Contrato</p>
-            <p class="nombre contrato">Tiempo Completo</p>
-        </div>
-        <div class="caja centrar-vertical">
-            <a href="#" class="btn btn-verde">Más Información</a>
-        </div>
-    </div>
+    {{/each}}
+
+    <!--Example containers-->
+<!--    <div class="vacante">-->
+<!--        <div class="caja">-->
+<!--            <h3>Facebook</h3>-->
+<!--            <p class="puesto">React Developer</p>-->
+<!--        </div>-->
+<!--        <div class="caja">-->
+<!--            <p class="etiqueta">Ubicación</p>-->
+<!--            <p class="nombre">Remoto</p>-->
+<!--        </div>-->
+<!--        <div class="caja">-->
+<!--            <p class="etiqueta">Contrato</p>-->
+<!--            <p class="nombre contrato">Tiempo Completo</p>-->
+<!--        </div>-->
+<!--        <div class="caja centrar-vertical">-->
+<!--            <a href="#" class="btn btn-verde">Más Información</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="vacante">-->
+<!--        <div class="caja">-->
+<!--            <h3>Nomitek</h3>-->
+<!--            <p class="puesto">Java Developer</p>-->
+<!--        </div>-->
+<!--        <div class="caja">-->
+<!--            <p class="etiqueta">Ubicación</p>-->
+<!--            <p class="nombre">Presencial</p>-->
+<!--        </div>-->
+<!--        <div class="caja">-->
+<!--            <p class="etiqueta">Contrato</p>-->
+<!--            <p class="nombre contrato">Tiempo Completo</p>-->
+<!--        </div>-->
+<!--        <div class="caja centrar-vertical">-->
+<!--            <a href="#" class="btn btn-verde">Más Información</a>-->
+<!--        </div>-->
+<!--    </div>-->
 </main>
