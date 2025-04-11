@@ -99,8 +99,11 @@ const saveVacante = async (req, res) => {
 const mostrarVacante = async (req, res) => {
     const id = req.params.id;
     const findVacante = await Vacante.findById(id);
-    res.render("vacantes.mostrarVacante", {
-        vacante: findVacante
+    // console.log("Se pasa la vacante a la vista");
+    res.render("vacantes/mostrarVacante", {
+        vacante: findVacante.toObject(),
+        barra:true,
+        nombrePagina: findVacante.titulo
     });
 }
 

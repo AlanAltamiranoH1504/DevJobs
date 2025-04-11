@@ -16,7 +16,7 @@ router.get("/", home);
 //Rutas para crear vacantes
 router.get("/vacantes/nueva", formNuevaVacante);
 router.post("/vacantes/nueva", saveVacante)
-//Rutas para mostrar vacantes
+//Rutas para mostrar vacante
 router.get("/vacante/:id", mostrarVacante);
 
 export default router;
