@@ -5,7 +5,8 @@ import {
 } from "../controllers/homeController.js";
 import {
     formNuevaVacante,
-    saveVacante
+    saveVacante,
+    mostrarVacante
 } from "../controllers/vacanteController.js";
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.get("/", home);
 //Rutas para crear vacantes
 router.get("/vacantes/nueva", formNuevaVacante);
 router.post("/vacantes/nueva", saveVacante)
+//Rutas para mostrar vacantes
+router.get("/vacante/:id", mostrarVacante);
 
 export default router;

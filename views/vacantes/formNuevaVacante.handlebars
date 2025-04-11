@@ -3,13 +3,13 @@
         <h3>Informacion General </h3>
 
         {{#if error}}
-            <div style="color: white; text-transform: uppercase; background: red; padding-bottom: 3px; padding-top: 3px; text-align: center; font-weight: bolder; border-radius: 15px; margin-bottom: 10px" >
+            <div class="bg-danger text-white text-uppercase fw-bold px-3 py-2 text-center my-4 rounded">
                 <p>{{msg}}</p>
             </div>
         {{/if}}
         {{#if sucess}}
-            <div style="color: white; text-transform: uppercase; background: darkgreen; padding-bottom: 3px; padding-top: 3px; text-align: center; font-weight: bolder; border-radius: 15px; margin-bottom: 10px" >
-                <p>{{msg}}</p>
+            <div class="bg-success text-white text-uppercase fw-bold px-3 py-2 text-center my-4 rounded" >
+                <p class="fs-2">{{msg}}</p>
             </div>
         {{/if}}
         <div class="campo">

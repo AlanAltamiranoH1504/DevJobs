@@ -35,6 +35,8 @@ app.set("view engine", "handlebars");
 
 //Habilitamos archivos publicos
 app.use(express.static(path.join(__dirname, "public")));
+//Habilitacion de Bootstrap
+app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
 //Habilitacion de sesion para la conexion a la base de datos
 app.use(cokieParser());

@@ -96,7 +96,16 @@ const saveVacante = async (req, res) => {
     });
 }
 
+const mostrarVacante = async (req, res) => {
+    const id = req.params.id;
+    const findVacante = await Vacante.findById(id);
+    res.render("vacantes.mostrarVacante", {
+        vacante: findVacante
+    });
+}
+
 export {
     formNuevaVacante,
-    saveVacante
+    saveVacante,
+    mostrarVacante
 }
