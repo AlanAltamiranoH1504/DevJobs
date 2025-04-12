@@ -1,0 +1,174 @@
+<main class="contenedor">
+    <form class="default-form" action="/devjobs/vacante/save-edicion" method="post">
+        <h3 class="text-center">Informacion General </h3>
+
+        <input type="hidden" name="_id" id="_id" value="{{vacante._id}}">
+
+        {{#if error}}
+            <div class="bg-danger text-white text-uppercase fw-bold px-3 py-2 text-center my-4 rounded">
+                <p>{{msg}}</p>
+            </div>
+        {{/if}}
+        {{#if sucess}}
+            <div class="bg-success text-white text-uppercase fw-bold px-3 py-2 text-center my-4 rounded">
+                <p class="fs-2">{{msg}}</p>
+            </div>
+        {{/if}}
+        <div class="campo">
+            <label for="titulo">Titulo Vacante:</label>
+            <input type="text" name="titulo" id="titulo" placeholder="Titulo de la vacante" value="{{vacante.titulo}}"
+                   required>
+        </div>
+        <div class="campo">
+            <label>Empresa:</label>
+            <input type="text" name="empresa" id="empresa" placeholder="Empresa reclutadora" value="{{vacante.empresa}}"
+                   required>
+        </div>
+        <div class="campo">
+            <label for="ubicacion">Ubicacion:</label>
+            <input type="text" name="ubicacion" id="ubicacion" placeholder="Ubicación" value="{{vacante.ubicacion}}"
+                   required>
+        </div>
+        <div class="campo">
+            <label for="salario">Salario (MX):</label>
+            <input type="text" name="salario" id="salario" value="{{vacante.salario}}" placeholder="Salario de vacante">
+        </div>
+        <div class="campo">
+            <label>Contrato</label>
+            <select name="contrato">
+                <option value="">--- Selecciona una opcion ---</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Completo">Tiempo Completo</option>
+                <option value="Medio">Medio Tiempo</option>
+                <option value="Proyecto">Por Proyecto</option>
+            </select>
+        </div>
+        <h3>Descripción del Puesto</h3>
+        <div class="campo descripcion">
+            <label for="descripcion">Descripción del Puesto: </label>
+            <input type="hidden" id="x" value="{{vacante.descripcion}}" name="descripcion">
+            <trix-editor input="x"></trix-editor>
+        </div>
+
+        <h3>Conocimientos</h3>
+        <div>
+            <div class="d-flex justify-content-center">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item">
+                        <label class="text-black">HTML 5</label>
+                        <input type="checkbox" name="skills[]" value="html">
+                    </li>
+
+                    <li class="list-group-item">
+                        <label class="text-black">CSS 3</label>
+                        <input type="checkbox" name="skills[]" value="css3">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">CSS GRID</label>
+                        <input type="checkbox" name="skills[]" value="css-grid">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">FLEXBOX</label>
+                        <input type="checkbox" name="skills[]" value="flexbox">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">JavaScript</label>
+                        <input type="checkbox" name="skills[]" value="javascript">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">JQUERY</label>
+                        <input type="checkbox" name="skills[]" value="jquery">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item">
+                        <label class="text-black">Laravel</label>
+                        <input type="checkbox" name="skills[]" value="laravel">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">Symfony</label>
+                        <input type="checkbox" name="skills[]" value="symfony">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">Python</label>
+                        <input type="checkbox" name="skills[]" value="python">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">Django</label>
+                        <input type="checkbox" name="skills[]" value="django">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">ORM</label>
+                        <input type="checkbox" name="skills[]" value="orm">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">Sequelize</label>
+                        <input type="checkbox" name="skills[]" value="sequelize">
+                    </li>
+                </ul>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item">
+                        <label class="text-black">VueJs</label>
+                        <input type="checkbox" name="skills[]" value="vuejs">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">ReactJS</label>
+                        <input type="checkbox" name="skills[]" value="reactjs">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">Redux</label>
+                        <input type="checkbox" name="skills[]" value="redux">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">Apollo</label>
+                        <input type="checkbox" name="skills[]" value="apollo">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">TypeScript</label>
+                        <input type="checkbox" name="skills[]" value="typeScript">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">PHP</label>
+                        <input type="checkbox" name="skills[]" value="php">
+                    </li>
+                </ul>
+            </div>
+            <!--row 3-->
+
+            <!--row 4-->
+            <div class="d-flex justify-content-center mt-4">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item">
+                        <label class="text-black">Mongoose</label>
+                        <input type="checkbox" name="skills[]" value="mongoose">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">SQL</label>
+                        <input type="checkbox" name="skills[]" value="sql">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">MVC</label>
+                        <input type="checkbox" name="skills[]" value="mvc">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">SASS</label>
+                        <input type="checkbox" name="skills[]" value="sass">
+                    </li>
+                    <li class="list-group-item">
+                        <label class="text-black">WordPress</label>
+                        <input type="checkbox" name="skills[]" value="wordpress">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="campo centrar-horizontal">
+            <input type="submit" value="Actualizar Vacante" class="btn btn-azul">
+        </div>
+    </form>
+</main>

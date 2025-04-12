@@ -1,3 +1,14 @@
+{{#if bandera}}
+    <div class="container-xl">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="bg-success text-white px-3 py-2 text-uppercase rounded-3">
+                    <p class="fw-bold text-center fs-2">¡Vacante Actualizada!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
 <div class="contenido-superior vacante contenedor">
     <div class="caja">
         <p class="etiqueta">Empresa:</p>
@@ -17,12 +28,15 @@
     </div>
 </div>
 
-<div class="vacante-contenedor contenedor">
+<div class="vacante-contenedor contenedor mb-4">
     <main class="contenido">
         <h2>Descripción del Puesto:</h2>
         <div class="vacante-descripcion text-white">
             {{{vacante.descripcion}}}
         </div>
+
+        <h2 class="mt-4 mb-2">Edición de Vacante</h2>
+        <a href="/devjobs/vacante-edicion/{{vacante._id}}" class="btn btn-primary w-50">Editar Vacante</a>
     </main>
     <aside class="sidebar">
         <h2>Skills del Puesto:</h2>

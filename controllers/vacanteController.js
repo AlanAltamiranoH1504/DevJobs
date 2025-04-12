@@ -98,17 +98,63 @@ const saveVacante = async (req, res) => {
 
 const mostrarVacante = async (req, res) => {
     const id = req.params.id;
+    const bandera = req.params.bandera;
     const findVacante = await Vacante.findById(id);
     // console.log("Se pasa la vacante a la vista");
     res.render("vacantes/mostrarVacante", {
         vacante: findVacante.toObject(),
         barra:true,
+        bandera,
         nombrePagina: findVacante.titulo
     });
+}
+
+const editarVacanteForm = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const findVacante = await Vacante.findById(id);
+        if (!findVacante){
+            res.redirect("/devjobs");
+            return;
+        }
+        res.render("vacantes/editarVacanteForm", {
+            vacante: findVacante.toObject(),
+            barra: true,
+            nombrePagina: `Editar Vacante - ${findVacante.titulo}`
+        })
+    } catch (e) {
+        console.log("Error en la edicion de vacante");
+        console.log(e.message);
+    }
+}
+
+const saveEdicionVacante = async (req, res) =>{
+    const {_id, titulo, empresa, ubicacion, salario, contrato, descripcion, skills} = req.body;
+    try{
+        const actualizacionVacante = await Vacante.updateOne({_id}, {
+            $set:  {
+                titulo,
+                empresa,
+                ubicacion,
+                salario,
+                contrato,
+                descripcion,
+                skills
+            }
+        });
+        if (actualizacionVacante){
+            res.redirect(`/devjobs/vacante/${_id}/1`);
+        }
+    }catch (e){
+        console.log("ERORR EN LA EDICION DE LA VACANTE");
+        console.log(e.message);
+    }
 }
 
 export {
     formNuevaVacante,
     saveVacante,
-    mostrarVacante
+    mostrarVacante,
+    editarVacanteForm,
+    saveEdicionVacante
 }
