@@ -8,7 +8,8 @@ import {
     saveVacante,
     mostrarVacante,
     editarVacanteForm,
-    saveEdicionVacante
+    saveEdicionVacante,
+    deleteVacante
 } from "../controllers/vacanteController.js";
 
 const router = express.Router();
@@ -24,5 +25,7 @@ router.get("/vacante/:id/:bandera", mostrarVacante);
 //Rutas para editar vacante
 router.get("/vacante-edicion/:id", editarVacanteForm)
 router.post("/vacante/save-edicion", saveEdicionVacante);
+//Rutas para eliminar vacante
+router.post("/vacante/delete", deleteVacante);
 
 export default router;

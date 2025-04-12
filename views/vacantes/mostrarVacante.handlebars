@@ -37,6 +37,12 @@
 
         <h2 class="mt-4 mb-2">Edición de Vacante</h2>
         <a href="/devjobs/vacante-edicion/{{vacante._id}}" class="btn btn-primary w-50">Editar Vacante</a>
+
+        <h2 class="mt-4 mb-4">Elimiación de Vacante</h2>
+        <form method="post" action="/devjobs/vacante/delete">
+            <input type="hidden" name="_id" id="_id" value="{{vacante._id}}">
+            <input type="submit" class="btn btn-danger w-50" value="Eliminar Vacante">
+        </form>
     </main>
     <aside class="sidebar">
         <h2>Skills del Puesto:</h2>

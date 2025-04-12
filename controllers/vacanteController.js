@@ -77,7 +77,7 @@ const saveVacante = async (req, res) => {
     });
     try{
         await vacanteNew.save().then(() => {
-            console.log("Vacante guardada de manera correcta");
+            // console.log("Vacante guardada de manera correcta");
             // console.log(vacanteNew);
         }).catch((error) => {
             console.log("Error al guardar la vacante");
@@ -151,10 +151,26 @@ const saveEdicionVacante = async (req, res) =>{
     }
 }
 
+const deleteVacante = async (req, res) => {
+    const id = req.body._id;
+    const vacanteDelete = await Vacante.deleteOne({
+        _id: id
+    });
+    const vacantes = await Vacante.find().lean();
+    res.render('home', {
+        nombrePagina: "DevJobs",
+        tagline: "Encuentra y publica trabajos para desarrolladores web",
+        barra: true,
+        boton: true,
+        vacantes
+    });
+}
+
 export {
     formNuevaVacante,
     saveVacante,
     mostrarVacante,
     editarVacanteForm,
-    saveEdicionVacante
+    saveEdicionVacante,
+    deleteVacante
 }
