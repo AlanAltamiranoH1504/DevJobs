@@ -1,0 +1,29 @@
+<main class="contenedor">
+    <form class="default-form" action="/devjobs/crear-cuenta" method="post">
+        <h3 class="text-center">Registro de Nuevos Usuarios</h3>
+
+        <div class="campo">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Nombre de usuario" required   >
+        </div>
+        <div class="campo">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="E-mail de usuario">
+        </div>
+        <div class="campo">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="Password de usuario">
+        </div>
+        <div class="campo">
+            <label for="confirmar_password">Confirma tu Password:</label>
+            <input type="password" name="confirmar_password" id="confirmar_password" placeholder="Confirma tu password">
+        </div>
+        <div class="campo acciones">
+            <a href="/devjobs/iniciar-sesion">Iniciar Sesíon</a>
+        </div>
+
+        <div class="campo centrar-horizontal">
+            <input type="submit" class="btn btn-azul" value="Crear Cuenta">
+        </div>
+    </form>
+</main>

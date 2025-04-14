@@ -17,5 +17,6 @@ mongoose.connection.on('error', (err) => {
 
 //Importamos los modelos
 import Vacante from "../models/Vacante.js";
+import Usuario from "../models/Usuario.js";
 
 export default mongoose;

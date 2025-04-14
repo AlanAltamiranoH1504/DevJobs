@@ -12,6 +12,10 @@ import {
     deleteVacante
 } from "../controllers/vacanteController.js";
 
+import {
+    formCrearCuenta
+} from "../controllers/usuarioController.js";
+
 const router = express.Router();
 
 //Rutas de area publica
@@ -27,5 +31,6 @@ router.get("/vacante-edicion/:id", editarVacanteForm)
 router.post("/vacante/save-edicion", saveEdicionVacante);
 //Rutas para eliminar vacante
 router.post("/vacante/delete", deleteVacante);
-
+//Ruta para crear cuenta
+router.get("/crear-cuenta", formCrearCuenta);
 export default router;
