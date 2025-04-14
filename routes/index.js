@@ -13,7 +13,8 @@ import {
 } from "../controllers/vacanteController.js";
 
 import {
-    formCrearCuenta
+    formCrearCuenta,
+    saveUsuario
 } from "../controllers/usuarioController.js";
 
 const router = express.Router();
@@ -31,6 +32,8 @@ router.get("/vacante-edicion/:id", editarVacanteForm)
 router.post("/vacante/save-edicion", saveEdicionVacante);
 //Rutas para eliminar vacante
 router.post("/vacante/delete", deleteVacante);
-//Ruta para crear cuenta
+//Ruta para crear cuenta (formulario)
 router.get("/crear-cuenta", formCrearCuenta);
+//Ruta para crear cuenta (almacenar en db)
+router.post("/crear-cuenta", saveUsuario);
 export default router;
