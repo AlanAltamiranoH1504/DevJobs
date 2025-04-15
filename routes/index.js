@@ -16,7 +16,9 @@ import {
     formCrearCuenta,
     saveUsuario,
     vistaConfirmarCuenta,
-    confirmacionToken
+    confirmacionToken,
+    formInicarSesion,
+    inicioSesion
 } from "../controllers/usuarioController.js";
 
 const router = express.Router();
@@ -41,4 +43,8 @@ router.post("/crear-cuenta", saveUsuario);
 //Ruta para confirmar cuenta
 router.get("/confirmar/:token", vistaConfirmarCuenta);
 router.post("/confirmacion_token", confirmacionToken);
+
+//Rutas para iniciar sesion
+router.get("/iniciar-sesion", formInicarSesion);
+router.post("/inicio_sesion", inicioSesion);
 export default router;

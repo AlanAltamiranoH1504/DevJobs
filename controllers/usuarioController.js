@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import Usuario from "../models/Usuario.js";
 import {emailConfirmacion} from "../helpers/Emails.js";
 import {tokenDb} from "../helpers/Tokens.js";
-import {raw} from "express";
 import Vacante from "../models/Vacante.js";
 
 const formCrearCuenta = (req, res) => {
@@ -151,9 +150,55 @@ const confirmacionToken = async (req, res) => {
     }
 }
 
+const formInicarSesion = (req, res) => {
+    res.render("usuarios/iniciar_sesion", {
+        nombrePagina: "DevJobs",
+        tagline: "Inicia Sesión y Publica tus Vacantes",
+        barra: true,
+        error:false,
+        success: false,
+        msg: ""
+    });
+}
+
+const inicioSesion = async (req, res) => {
+    const {email, password} = req.body;
+    const usuario = await Usuario.findOne({email: email});
+    if (usuario.token != null){
+        res.render("usuarios/iniciar_sesion", {
+            nombrePagina: "DevJobs",
+            tagline: "Inicia Sesión y Publica tus Vacantes",
+            barra: true,
+            error:true,
+            success: false,
+            msg: "No has confirmado tu cuenta para iniciar sesion"
+        });
+        return;
+    }
+
+    const passwordDB = usuario.password;
+    const equalsPasswords = await bcrypt.compare(password, passwordDB);
+    //Comparamos passwords
+    if (!equalsPasswords){
+        res.render("usuarios/iniciar_sesion", {
+            nombrePagina: "DevJobs",
+            tagline: "Inicia Sesión y Publica tus Vacantes",
+            barra: true,
+            error:true,
+            success: false,
+            msg: "Contraseña incorrecta, vuelve a intentarlo"
+        });
+        return;
+    }
+
+    console.log("Incia sesion de manera correcta");
+}
+
 export {
     formCrearCuenta,
     saveUsuario,
     vistaConfirmarCuenta,
-    confirmacionToken
+    confirmacionToken,
+    formInicarSesion,
+    inicioSesion
 }
