@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import Usuario from "../models/Usuario.js";
+import {emailConfirmacion} from "../helpers/Emails.js";
 
 const formCrearCuenta = (req, res) => {
     res.render("usuarios/crear-cuenta", {
@@ -92,6 +93,8 @@ const saveUsuario = async (req, res) => {
             email,
             password: contraseñaHash
         });
+        emailConfirmacion(req.body);
+
         res.render("usuarios/crear-cuenta", {
             nombrePagina: "Crea tu Cuenta en DevJobs",
             tagline: "Comienza a publicar tus vacantes gratis, solo debes registrarte.",
