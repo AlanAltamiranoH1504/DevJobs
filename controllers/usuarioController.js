@@ -1,5 +1,9 @@
 import bcrypt from "bcrypt";
 import Usuario from "../models/Usuario.js";
+import {emailConfirmacion} from "../helpers/Emails.js";
+import {tokenDb} from "../helpers/Tokens.js";
+import {raw} from "express";
+import Vacante from "../models/Vacante.js";
 
 const formCrearCuenta = (req, res) => {
     res.render("usuarios/crear-cuenta", {
@@ -87,11 +91,15 @@ const saveUsuario = async (req, res) => {
     //Almacenamos usuario
     try {
         const contraseñaHash = await bcrypt.hash(password, 10);
+        const token = tokenDb();
         const usuarioSave = await Usuario.create({
             nombre,
             email,
-            password: contraseñaHash
+            password: contraseñaHash,
+            token
         });
+        emailConfirmacion(usuarioSave);
+
         res.render("usuarios/crear-cuenta", {
             nombrePagina: "Crea tu Cuenta en DevJobs",
             tagline: "Comienza a publicar tus vacantes gratis, solo debes registrarte.",
@@ -106,7 +114,46 @@ const saveUsuario = async (req, res) => {
     }
 }
 
+const vistaConfirmarCuenta = (req, res) => {
+    const token = req.params.token;
+    res.render("usuarios/confirmacion-cuenta", {
+        nombrePagina:"Confirmación de Cuenta para Nuevo Usuario",
+        tagline: "Confirma tu cuenta e inicia sesion",
+        barra: true,
+        token
+    });
+}
+
+const confirmacionToken = async (req, res) => {
+    const {token} = req.body;
+    //Buscamos usuario con ese token
+    const usuario = await Usuario.findOne({
+        token: token
+    });
+    //Validacion de usuario con ese token
+    if (!usuario){
+        console.log("Token no valido");
+    }
+    try {
+        usuario.token = null;
+        await usuario.save();
+        const vacantes = await Vacante.find().lean();
+        res.render('home', {
+            nombrePagina: "DevJobs",
+            tagline: "Encuentra y publica trabajos para desarrolladores web",
+            barra: true,
+            boton: true,
+            vacantes
+        });
+    }catch (e){
+        console.log("Error en la actualizacion del usuario");
+        console.log(e.message);
+    }
+}
+
 export {
     formCrearCuenta,
-    saveUsuario
+    saveUsuario,
+    vistaConfirmarCuenta,
+    confirmacionToken
 }

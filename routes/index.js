@@ -14,7 +14,9 @@ import {
 
 import {
     formCrearCuenta,
-    saveUsuario
+    saveUsuario,
+    vistaConfirmarCuenta,
+    confirmacionToken
 } from "../controllers/usuarioController.js";
 
 const router = express.Router();
@@ -36,4 +38,7 @@ router.post("/vacante/delete", deleteVacante);
 router.get("/crear-cuenta", formCrearCuenta);
 //Ruta para crear cuenta (almacenar en db)
 router.post("/crear-cuenta", saveUsuario);
+//Ruta para confirmar cuenta
+router.get("/confirmar/:token", vistaConfirmarCuenta);
+router.post("/confirmacion_token", confirmacionToken);
 export default router;

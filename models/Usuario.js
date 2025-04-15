@@ -19,7 +19,8 @@ const usuarioSchema = new Schema({
         trim: true,
     },
     token: {
-        type: String
+        type: String,
+        require: false
     },
     expira: {
         type: Date
