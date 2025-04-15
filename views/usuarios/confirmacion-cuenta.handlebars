@@ -1,0 +1,13 @@
+<main class="contenedor">
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="mb-4">Haz click en el siguiente boton para confirmar tu cuenta</h2>
+                <form action="/devjobs/confirmacion_token" method="post" class="mb-4">
+                    <input type="hidden" name="token" value="{{token}}">
+                    <input type="submit" class="btn btn-azul" value="Confirmar Cuenta">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

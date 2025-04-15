@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const emailConfirmacion = async (datos) => {
-    const {email, nombre} = datos;
+    const {email, nombre, token} = datos;
+    console.log(datos);
+
     const transport = nodemailer.createTransport({
         host: process.env.HOST_MAILTRAP,
         port: process.env.PORT_MAILTRAP,
@@ -22,7 +24,7 @@ const emailConfirmacion = async (datos) => {
         html: `
             <p>Hola ${nombre}, confirma tu cuenta en DevJobs</p>
             <p>Tu cuenta ya se encuentra lista, solo debes confirmarla en el siguiente enlace: 
-                <a href="#">Confirmar Cuenta</a>
+                <a href="${process.env.BACKEND_URL}/confirmar/${token}">Confirmar Cuenta</a>
             </p>
             <p>Si no has sido tú, por favor ignora este correo.</p>
         `
