@@ -1,5 +1,11 @@
 <main class="contenedor">
     <h3 class="text-center text-uppercase">Edita tus Datos</h3>
+    {{#if error}}
+        <p class="bg-danger px-3 py-2 text-uppercase fw-bold text-center text-white fs-2 my-3 rounded">{{msg}}</p>
+    {{/if}}
+    {{#if success}}
+        <p class="bg-success px-3 py-2 text-uppercase fw-bold text-center text-white fs-2 my-3 rounded">{{msg}}</p>
+    {{/if}}
     <form action="/devjobs/updatePerfil" method="post" class="default-form">
         <input type="hidden" name="_id" id="_id" value="{{usuario._id}}">
         <div class="campo">

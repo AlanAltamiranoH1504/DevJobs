@@ -40,14 +40,15 @@ router.get("/vacante-edicion/:id", protegerRuta, editarVacanteForm)
 router.post("/vacante/save-edicion", protegerRuta, saveEdicionVacante);
 router.post("/vacante/delete", protegerRuta, deleteVacante);
 router.get("/editarPerfil", protegerRuta, editarPerfilForm);
-router.post("/updatePerfil", protegerRuta, [
-    body("_id").trim().escape(),
-    body("nombre").trim().escape().notEmpty().withMessage("El nombre es obligatorio"),
-    body("email").trim().escape().notEmpty().withMessage("El email es obligatorio").isEmail().withMessage("Debe ser un email valido").normalizeEmail(),
-    body("password").trim().escape().notEmpty().withMessage("La password es obligatoria"),
-    body("confirmar_password").trim().escape().notEmpty().withMessage("La confirmacion de password es obligatoria")
-], updatePerfilReclutador);
-router.get("/cerrar-sesion", protegerRuta, cerrarSesion);
+router.post("/updatePerfil", protegerRuta, updatePerfilReclutador);
+// [
+//     body("_id").trim().escape(),
+//     body("nombre").trim().escape().notEmpty().withMessage("El nombre es obligatorio"),
+//     body("email").trim().escape().notEmpty().withMessage("El email es obligatorio").isEmail().withMessage("Debe ser un email valido").normalizeEmail(),
+//     body("password").trim().escape().notEmpty().withMessage("La password es obligatoria"),
+//     body("confirmar_password").trim().escape().notEmpty().withMessage("La confirmacion de password es obligatoria")
+// ],
+    router.get("/cerrar-sesion", protegerRuta, cerrarSesion);
 
 /**
  * RUTAS DE AREA PUBLICA
