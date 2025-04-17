@@ -27,6 +27,35 @@ const mostrarPanel = async (req, res) => {
     })
 }
 
+const editarPerfilForm = async (req, res) => {
+    const cookieToken = req.cookies.token;
+    const contenidoToken = jwt.verify(cookieToken, process.env.JWT_SECRET);
+    const {id} = contenidoToken;
+    const usuarioEnSesion = await Usuario.findById(id).lean();
+
+    res.render("auth/edicionPerfil", {
+        nombrePagina: "Edita tu perfil de Reclutador",
+        barra: true,
+        tagline: "Actualiza tus datos de reclutador",
+        usuario: usuarioEnSesion
+    });
+}
+
+const updatePerfilReclutador = async (req, res) => {
+    const {_id, nombre, email, password, confirmar_password} = req.body;
+
+    const usuarioActualizar = await Usuario.updateOne({_id}, {
+        $set: {
+            nombre,
+            email,
+            password
+        }
+    });
+    res.redirect("/devjobs/administracion");
+}
+
 export {
-    mostrarPanel
+    mostrarPanel,
+    editarPerfilForm,
+    updatePerfilReclutador
 }

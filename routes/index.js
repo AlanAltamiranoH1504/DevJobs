@@ -21,41 +21,36 @@ import {
     inicioSesion
 } from "../controllers/usuarioController.js";
 import {
-    mostrarPanel
+    mostrarPanel,
+    editarPerfilForm,
+    updatePerfilReclutador
 } from "../controllers/authController.js";
 import {protegerRuta} from "../helpers/Middlewares.js";
 
 const router = express.Router();
-
-//Rutas de area publica
-router.get("/", home);
-//Rutas para iniciar sesion
-router.get("/iniciar-sesion", formInicarSesion);
-router.post("/inicio_sesion", inicioSesion);
-
-//Rutas para crear vacantes
+/**
+ * RUTAS DE AREA PRIVADA (AUTENTICACION)
+ */
+router.get("/administracion", protegerRuta, mostrarPanel);
 router.get("/vacantes/nueva", protegerRuta, formNuevaVacante);
 router.post("/vacantes/nueva", protegerRuta, saveVacante);
+router.get("/vacante-edicion/:id", protegerRuta, editarVacanteForm)
+router.post("/vacante/save-edicion", protegerRuta, saveEdicionVacante);
+router.post("/vacante/delete", protegerRuta, deleteVacante);
+router.get("/editarPerfil", protegerRuta, editarPerfilForm);
+router.post("/updatePerfil", protegerRuta, updatePerfilReclutador);
 
-//Rutas para mostrar vacante
+/**
+ * RUTAS DE AREA PUBLICA
+ */
+router.get("/", home);
+router.get("/crear-cuenta", formCrearCuenta);
+router.post("/crear-cuenta", saveUsuario);
+router.get("/iniciar-sesion", formInicarSesion);
+router.post("/inicio_sesion", inicioSesion);
+router.get("/confirmar/:token", vistaConfirmarCuenta);
+router.post("/confirmacion_token", confirmacionToken);
 router.get("/vacante/:id", mostrarVacante);
 router.get("/vacante/:id/:bandera", mostrarVacante);
 
-//Rutas para editar vacante
-router.get("/vacante-edicion/:id", protegerRuta, editarVacanteForm)
-router.post("/vacante/save-edicion", protegerRuta, saveEdicionVacante);
-//Rutas para eliminar vacante
-router.post("/vacante/delete", protegerRuta, deleteVacante);
-
-//Ruta para crear cuenta (formulario)
-router.get("/crear-cuenta", formCrearCuenta);
-//Ruta para crear cuenta (almacenar en db)
-router.post("/crear-cuenta", saveUsuario);
-//Ruta para confirmar cuenta
-router.get("/confirmar/:token", vistaConfirmarCuenta);
-router.post("/confirmacion_token", confirmacionToken);
-
-
-//Seccion de administracion (requiere autenticacion)
-router.get("/administracion", protegerRuta, mostrarPanel);
 export default router;
