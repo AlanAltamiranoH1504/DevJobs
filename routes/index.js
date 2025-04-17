@@ -20,6 +20,9 @@ import {
     formInicarSesion,
     inicioSesion
 } from "../controllers/usuarioController.js";
+import {
+    mostrarPanel
+} from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -43,8 +46,10 @@ router.post("/crear-cuenta", saveUsuario);
 //Ruta para confirmar cuenta
 router.get("/confirmar/:token", vistaConfirmarCuenta);
 router.post("/confirmacion_token", confirmacionToken);
-
 //Rutas para iniciar sesion
 router.get("/iniciar-sesion", formInicarSesion);
 router.post("/inicio_sesion", inicioSesion);
+
+//Seccion de administracion (requiere autenticacion)
+router.get("/administracion", mostrarPanel);
 export default router;

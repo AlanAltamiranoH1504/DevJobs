@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import Usuario from "../models/Usuario.js";
 import {emailConfirmacion} from "../helpers/Emails.js";
-import {tokenDb} from "../helpers/Tokens.js";
+import {tokenDb, tokenJWT} from "../helpers/Tokens.js";
 import Vacante from "../models/Vacante.js";
 
 const formCrearCuenta = (req, res) => {
@@ -137,12 +137,13 @@ const confirmacionToken = async (req, res) => {
         usuario.token = null;
         await usuario.save();
         const vacantes = await Vacante.find().lean();
-        res.render('home', {
+        res.render("usuarios/iniciar_sesion", {
             nombrePagina: "DevJobs",
-            tagline: "Encuentra y publica trabajos para desarrolladores web",
+            tagline: "Inicia Sesión y Publica tus Vacantes",
             barra: true,
-            boton: true,
-            vacantes
+            error:false,
+            success: false,
+            msg: ""
         });
     }catch (e){
         console.log("Error en la actualizacion del usuario");
@@ -164,6 +165,20 @@ const formInicarSesion = (req, res) => {
 const inicioSesion = async (req, res) => {
     const {email, password} = req.body;
     const usuario = await Usuario.findOne({email: email});
+
+    //Agregar validacion que no sean vacios los campos
+    if (!usuario){
+        res.render("usuarios/iniciar_sesion", {
+            nombrePagina: "DevJobs",
+            tagline: "Inicia Sesión y Publica tus Vacantes",
+            barra: true,
+            error:true,
+            success: false,
+            msg: "No hay un usuario registrado con ese email"
+        });
+        return;
+    }
+
     if (usuario.token != null){
         res.render("usuarios/iniciar_sesion", {
             nombrePagina: "DevJobs",
@@ -190,8 +205,13 @@ const inicioSesion = async (req, res) => {
         });
         return;
     }
-
-    console.log("Incia sesion de manera correcta");
+    console.log("Iniciando session correctamente");
+    const tokenUsuario = await tokenJWT(usuario._id, usuario.email);
+    res.cookie("token", tokenUsuario, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 1000*60*60
+    }).redirect("/devjobs/administracion");
 }
 
 export {

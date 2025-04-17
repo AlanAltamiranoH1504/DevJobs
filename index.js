@@ -6,7 +6,7 @@
 import mongoose from 'mongoose'
 import conexion from './config/db.js'
 import express from 'express';
-import cokieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import bodyParser from "body-parser";
 import mongoStore from 'connect-mongo'
@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
 //Habilitacion de sesion para la conexion a la base de datos
-app.use(cokieParser());
+app.use(cookieParser());
 app.use(session({
     secret: process.env.SECRET,
     key: process.env.KEY,
