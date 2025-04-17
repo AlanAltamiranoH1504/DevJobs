@@ -10,6 +10,7 @@ const formNuevaVacante = (req, res) => {
     res.render("vacantes/formNuevaVacante", {
         nombrePagina: "Nueva Vacante",
         tagline: "Llena el formulario y publica tu vacante",
+        cerrarSesion: true,
         error: false,
         sucess: false,
     });
@@ -130,7 +131,7 @@ const editarVacanteForm = async (req, res) => {
         }
         res.render("vacantes/editarVacanteForm", {
             vacante: findVacante.toObject(),
-            barra: true,
+            cerrarSesion:true,
             nombrePagina: `Editar Vacante - ${findVacante.titulo}`
         })
     } catch (e) {
@@ -179,13 +180,7 @@ const deleteVacante = async (req, res) => {
         _id: id_form
     });
     const vacantes = await Vacante.find().lean();
-    res.render('home', {
-        nombrePagina: "DevJobs",
-        tagline: "Encuentra y publica trabajos para desarrolladores web",
-        barra: true,
-        boton: true,
-        vacantes
-    });
+    res.redirect("/devjobs/administracion");
 }
 
 export {

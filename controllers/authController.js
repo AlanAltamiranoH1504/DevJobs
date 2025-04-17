@@ -44,8 +44,6 @@ const editarPerfilForm = async (req, res) => {
 
 const updatePerfilReclutador = async (req, res) => {
     const {_id, nombre, email, password, confirmar_password} = req.body;
-
-
     const usuarioActualizar = await Usuario.updateOne({_id}, {
         $set: {
             nombre,
