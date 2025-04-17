@@ -1,6 +1,9 @@
 import Vacante from "../models/Vacante.js";
-import {removeUnnecessaryItems} from "@babel/preset-env/lib/filter-items.js";
-import {raw} from "express";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import {protegerRuta} from "../helpers/Middlewares.js";
+import Usuario from "../models/Usuario.js";
+dotenv.config();
 
 //Rutas del vacanteController
 const formNuevaVacante = (req, res) => {
@@ -13,6 +16,12 @@ const formNuevaVacante = (req, res) => {
 }
 
 const saveVacante = async (req, res) => {
+    //Usuario en sesion
+    const tokenSesion = req.cookies.token;
+    const contenidoToken = await jwt.verify(tokenSesion, process.env.JWT_SECRET);
+    const {id} = contenidoToken;
+    const usuarioSesion = await Usuario.findById(id);
+
     const {titulo, empresa, ubicacion, salario, contrato, descripcion, skills} = req.body;
     if (titulo.trim() === "" || titulo == null) {
         res.render("vacantes/formNuevaVacante", {
@@ -73,7 +82,8 @@ const saveVacante = async (req, res) => {
         salario,
         contrato,
         descripcion,
-        skills
+        skills,
+        autor: usuarioSesion._id
     });
     try{
         await vacanteNew.save().then(() => {

@@ -4,4 +4,36 @@
         <a href="/editarPerfil" class="btn btn-azul">Editar Perfil</a>
         <a href="/devjobs/vacantes/nueva" class="btn btn-verde">Agregar Vacante</a>
     </div>
+
+    <h2 class="text-uppercase my-3">Tus Vacantes</h2>
+    {{#if vacantes.length }}
+        {{#each vacantes}}
+            <div class="vacante panel-administracion">
+                <div class="caja">
+                    <h3>{{this.empresa}}</h3>
+                    <p class="puesto">{{this.titulo}}</p>
+                </div>
+                <div class="centrar-vertical caja">
+                    <a href="/devjobs/candidatos/{{this._id}}" class="btn btn-secondary">Candidatos</a>
+                </div>
+                <div class="centrar-vertical caja">
+                    <a href="/devjobs/vacante-edicion/{{this._id}}" class="btn btn-amarillo">Editar</a>
+                </div>
+                <div class="centrar-vertical caja">
+                    <form method="post" action="/devjobs/vacante/delete">
+                        <input type="hidden" id="_id" name="_id" value="{{this._id}}">
+                        <input type="submit" class="btn btn-rojo" value="Eliminar">
+                    </form>
+
+<!--                    <a href="/devjobs/vacante/delete" class="btn btn-danger">Eliminar</a>-->
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <div class="container-xl my-3">
+            <div class="row d-flex justify-content-center align-items-center bg-danger rounded">
+                <p class="fw-bold text-white px-3 py-2 rounded fs-2 text-center text-uppercase">No tienes vacantes publicadas</p>
+            </div>
+        </div>
+    {{/if}}
 </main>

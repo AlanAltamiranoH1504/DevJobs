@@ -43,6 +43,11 @@ const vacanteSchema = new Schema({
         nombre: String,
         email: String,
         cv: String
+    }],
+    //Relacion de una Vacante con un Usuario
+    autor: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario'
     }]
 });
 
@@ -51,7 +56,6 @@ vacanteSchema.pre("save", function(next){
     //Creamos url
     const url = slug(this.titulo);
     this.url = `${url}-${shortid.generate()}`;
-    //react-developer-123456
     next();
 });
 

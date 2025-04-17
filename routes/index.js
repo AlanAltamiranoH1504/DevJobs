@@ -23,7 +23,7 @@ import {
 import {
     mostrarPanel
 } from "../controllers/authController.js";
-import {proterRuta} from "../helpers/Middlewares.js";
+import {protegerRuta} from "../helpers/Middlewares.js";
 
 const router = express.Router();
 
@@ -34,16 +34,19 @@ router.get("/iniciar-sesion", formInicarSesion);
 router.post("/inicio_sesion", inicioSesion);
 
 //Rutas para crear vacantes
-router.get("/vacantes/nueva", proterRuta, formNuevaVacante);
-router.post("/vacantes/nueva", saveVacante)
+router.get("/vacantes/nueva", protegerRuta, formNuevaVacante);
+router.post("/vacantes/nueva", protegerRuta, saveVacante);
+
 //Rutas para mostrar vacante
 router.get("/vacante/:id", mostrarVacante);
 router.get("/vacante/:id/:bandera", mostrarVacante);
+
 //Rutas para editar vacante
-router.get("/vacante-edicion/:id", editarVacanteForm)
-router.post("/vacante/save-edicion", saveEdicionVacante);
+router.get("/vacante-edicion/:id", protegerRuta, editarVacanteForm)
+router.post("/vacante/save-edicion", protegerRuta, saveEdicionVacante);
 //Rutas para eliminar vacante
-router.post("/vacante/delete", deleteVacante);
+router.post("/vacante/delete", protegerRuta, deleteVacante);
+
 //Ruta para crear cuenta (formulario)
 router.get("/crear-cuenta", formCrearCuenta);
 //Ruta para crear cuenta (almacenar en db)
@@ -54,5 +57,5 @@ router.post("/confirmacion_token", confirmacionToken);
 
 
 //Seccion de administracion (requiere autenticacion)
-router.get("/administracion", mostrarPanel);
+router.get("/administracion", protegerRuta, mostrarPanel);
 export default router;

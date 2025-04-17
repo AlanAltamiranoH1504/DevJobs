@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import Usuario from "../models/Usuario.js";
 dotenv.config();
 
-const proterRuta = async (req, res, next) => {
+const protegerRuta = async (req, res, next) => {
     const tokenSesion = req.cookies.token;
     if (!tokenSesion) {
         console.log("Sin sesion autenticada");
@@ -31,5 +31,5 @@ const proterRuta = async (req, res, next) => {
 }
 
 export {
-    proterRuta
+    protegerRuta
 }
