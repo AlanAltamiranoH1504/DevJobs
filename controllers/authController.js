@@ -20,7 +20,7 @@ const mostrarPanel = async (req, res) => {
     }).lean();
 
     res.render("auth/administracion", {
-        nombrePagina: "Panel de Administracion",
+        nombrePagina: `¡Bienvenido ${usuarioSesion.nombre}!`,
         tagline: "Crea y Administra tus Vacantes desde Aqui",
         vacantes: vacantesDeUsuario,
         cerrarSesion: true,
@@ -36,7 +36,7 @@ const editarPerfilForm = async (req, res) => {
 
     res.render("auth/edicionPerfil", {
         nombrePagina: "Edita tu perfil de Reclutador",
-        barra: true,
+        cerrarSesion: true,
         tagline: "Actualiza tus datos de reclutador",
         usuario: usuarioEnSesion
     });
@@ -44,6 +44,7 @@ const editarPerfilForm = async (req, res) => {
 
 const updatePerfilReclutador = async (req, res) => {
     const {_id, nombre, email, password, confirmar_password} = req.body;
+
 
     const usuarioActualizar = await Usuario.updateOne({_id}, {
         $set: {

@@ -102,6 +102,7 @@ const saveVacante = async (req, res) => {
         tagline: "Llena el formulario y publica tu vacante",
         error: false,
         sucess: true,
+        cerrarSesion:true,
         msg: "Vacante Registrada Correctamente"
     });
 }
@@ -162,9 +163,20 @@ const saveEdicionVacante = async (req, res) =>{
 }
 
 const deleteVacante = async (req, res) => {
-    const id = req.body._id;
+    const tokenCookie = req.cookies.token;
+    const contenidoToken = await jwt.verify(tokenCookie, process.env.JWT_SECRET);
+    const {id} = contenidoToken;
+    const id_form = req.body._id;
+
+    //Buscamos usuario en sesion y vacante a eliminar
+    const usuarioActivo = await Usuario.findById(id);
+    const vacantePorEliminar = await Vacante.findById(id_form);
+
+    if (!vacantePorEliminar.autor[0].equals(usuarioActivo._id)){
+        res.redirect("/devjobs/administracion");
+    }
     const vacanteDelete = await Vacante.deleteOne({
-        _id: id
+        _id: id_form
     });
     const vacantes = await Vacante.find().lean();
     res.render('home', {
