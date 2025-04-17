@@ -23,7 +23,8 @@ import {
 import {
     mostrarPanel,
     editarPerfilForm,
-    updatePerfilReclutador
+    updatePerfilReclutador,
+    cerrarSesion
 } from "../controllers/authController.js";
 import {protegerRuta} from "../helpers/Middlewares.js";
 
@@ -39,6 +40,7 @@ router.post("/vacante/save-edicion", protegerRuta, saveEdicionVacante);
 router.post("/vacante/delete", protegerRuta, deleteVacante);
 router.get("/editarPerfil", protegerRuta, editarPerfilForm);
 router.post("/updatePerfil", protegerRuta, updatePerfilReclutador);
+router.get("/cerrar-sesion", protegerRuta, cerrarSesion);
 
 /**
  * RUTAS DE AREA PUBLICA

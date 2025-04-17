@@ -22,8 +22,9 @@ const mostrarPanel = async (req, res) => {
     res.render("auth/administracion", {
         nombrePagina: "Panel de Administracion",
         tagline: "Crea y Administra tus Vacantes desde Aqui",
-        barra: true,
-        vacantes: vacantesDeUsuario
+        vacantes: vacantesDeUsuario,
+        cerrarSesion: true,
+        nombre: usuarioSesion.nombre
     })
 }
 
@@ -54,8 +55,14 @@ const updatePerfilReclutador = async (req, res) => {
     res.redirect("/devjobs/administracion");
 }
 
+const cerrarSesion = (req, res) => {
+    res.clearCookie("token");
+    res.redirect("/devjobs");
+}
+
 export {
     mostrarPanel,
     editarPerfilForm,
-    updatePerfilReclutador
+    updatePerfilReclutador,
+    cerrarSesion
 }
