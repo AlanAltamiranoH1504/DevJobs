@@ -205,7 +205,7 @@ const inicioSesion = async (req, res) => {
         });
         return;
     }
-    console.log("Iniciando session correctamente");
+    // console.log("Iniciando session correctamente");
     const tokenUsuario = await tokenJWT(usuario._id, usuario.email);
     res.cookie("token", tokenUsuario, {
       httpOnly: true,

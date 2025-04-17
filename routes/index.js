@@ -23,13 +23,18 @@ import {
 import {
     mostrarPanel
 } from "../controllers/authController.js";
+import {proterRuta} from "../helpers/Middlewares.js";
 
 const router = express.Router();
 
 //Rutas de area publica
 router.get("/", home);
+//Rutas para iniciar sesion
+router.get("/iniciar-sesion", formInicarSesion);
+router.post("/inicio_sesion", inicioSesion);
+
 //Rutas para crear vacantes
-router.get("/vacantes/nueva", formNuevaVacante);
+router.get("/vacantes/nueva", proterRuta, formNuevaVacante);
 router.post("/vacantes/nueva", saveVacante)
 //Rutas para mostrar vacante
 router.get("/vacante/:id", mostrarVacante);
@@ -46,9 +51,7 @@ router.post("/crear-cuenta", saveUsuario);
 //Ruta para confirmar cuenta
 router.get("/confirmar/:token", vistaConfirmarCuenta);
 router.post("/confirmacion_token", confirmacionToken);
-//Rutas para iniciar sesion
-router.get("/iniciar-sesion", formInicarSesion);
-router.post("/inicio_sesion", inicioSesion);
+
 
 //Seccion de administracion (requiere autenticacion)
 router.get("/administracion", mostrarPanel);
