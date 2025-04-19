@@ -1,8 +1,8 @@
 import Vacante from "../models/Vacante.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import {protegerRuta} from "../helpers/Middlewares.js";
 import Usuario from "../models/Usuario.js";
+import {usuarioEnSesion} from "../helpers/UsuarioEnSesion.js";
 dotenv.config();
 
 //Rutas del vacanteController
@@ -111,18 +111,49 @@ const saveVacante = async (req, res) => {
 const mostrarVacante = async (req, res) => {
     const id = req.params.id;
     const bandera = req.params.bandera;
-    const findVacante = await Vacante.findById(id);
-    const autorVacante = await Usuario.findById(findVacante.autor[0]);
-    const pathImgAutorVacante = autorVacante._id + "_" + autorVacante.imagen;
-    // console.log("Se pasa la vacante a la vista");
-    res.render("vacantes/mostrarVacante", {
-        vacante: findVacante.toObject(),
-        barra:true,
-        bandera,
-        nombrePagina: findVacante.titulo,
-        tagline: `RECLUTADOR: ${autorVacante.nombre}`,
-        imagen: pathImgAutorVacante
-    });
+    const findVacante = await Vacante.findById(id).populate("autor");
+    const pathImgAutorVacante = findVacante.autor._id + "_" + findVacante.autor.imagen;
+    const cookieToken = req.cookies.token;
+
+    //Si no hay una cookie pedimos inicar sesion para contactar a recluutador
+    if (cookieToken === undefined || cookieToken == null){
+        res.render("vacantes/mostrarVacante", {
+            vacante: findVacante.toObject(),
+            barra:true,
+            bandera,
+            nombrePagina: findVacante.titulo,
+            tagline: `RECLUTADOR: ${findVacante.autor.nombre}`,
+            imagen: pathImgAutorVacante,
+            iniciarSesion : true
+        });
+    } else{
+        //Si hay sesion, idenitificamos si el de la sesion es el dueño de la vacante
+        const contenidoToken = await jwt.verify(cookieToken, process.env.JWT_SECRET);
+        const {id} = contenidoToken;
+        if (id.toString() === findVacante.autor._id.toString()){
+            res.render("vacantes/mostrarVacante", {
+                vacante: findVacante.toObject(),
+                barra:true,
+                bandera,
+                nombrePagina: findVacante.titulo,
+                tagline: `RECLUTADOR: ${findVacante.autor.nombre}`,
+                imagen: pathImgAutorVacante,
+                botones: true
+            });
+        }else{
+            const usuarioEnSesion = await Usuario.findById({_id: id}).lean();
+            res.render("vacantes/mostrarVacante", {
+                vacante: findVacante.toObject(),
+                barra:true,
+                bandera,
+                nombrePagina: findVacante.titulo,
+                tagline: `RECLUTADOR: ${findVacante.autor.nombre}`,
+                imagen: pathImgAutorVacante,
+                fromCV: true,
+                usuario: usuarioEnSesion
+            });
+        }
+    }
 }
 
 const editarVacanteForm = async (req, res) => {
@@ -177,7 +208,7 @@ const deleteVacante = async (req, res) => {
     const usuarioActivo = await Usuario.findById(id);
     const vacantePorEliminar = await Vacante.findById(id_form);
 
-    if (!vacantePorEliminar.autor[0].equals(usuarioActivo._id)){
+    if (!vacantePorEliminar.autor.equals(usuarioActivo._id)){
         res.redirect("/devjobs/administracion");
     }
     const vacanteDelete = await Vacante.deleteOne({
@@ -187,11 +218,46 @@ const deleteVacante = async (req, res) => {
     res.redirect("/devjobs/administracion");
 }
 
+const savePostulaciones = async (req, res) => {
+    const {user_id, vacante_id, nombre, email} = req.body;
+    const namePDF = user_id + "_" + req.file.originalname;
+
+    //Creamos el objeto candidato
+    const candidato = {
+        nombre,
+        email,
+        cv: namePDF
+    }
+
+    try {
+        //Buscamos la vacante y le agregamos el objeto candidato al atributo array de candidatos
+        const vacantePorActualizar = await Vacante.findById(vacante_id);
+        vacantePorActualizar.candidatos.push(candidato);
+        await vacantePorActualizar.save();
+
+        //Redirigimos
+        const findVacante = await Vacante.findById(vacante_id).populate("autor");
+        const pathImgAutorVacante = findVacante.autor._id + "_" + findVacante.autor.imagen;
+        res.render("vacantes/mostrarVacante", {
+            vacante: findVacante.toObject(),
+            nombrePagina: findVacante.titulo,
+            success: true,
+            tagline: `RECLUTADOR: ${findVacante.autor.nombre}`,
+            imagen: pathImgAutorVacante,
+            fromCV: true,
+        });
+    }catch (e) {
+        console.log("ERROR AL AGREGAR CANDIDATO");
+        console.log(e.message);
+    }
+}
+
 export {
     formNuevaVacante,
     saveVacante,
     mostrarVacante,
     editarVacanteForm,
     saveEdicionVacante,
-    deleteVacante
+    deleteVacante,
+    savePostulaciones
 }

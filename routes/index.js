@@ -9,7 +9,8 @@ import {
     mostrarVacante,
     editarVacanteForm,
     saveEdicionVacante,
-    deleteVacante
+    deleteVacante,
+    savePostulaciones
 } from "../controllers/vacanteController.js";
 
 import {
@@ -29,6 +30,7 @@ import {
 import {protegerRuta} from "../helpers/Middlewares.js";
 import {body} from "express-validator";
 import {upload} from "../Middlewares/MulterConfig.js";
+import {uploadPDF} from "../Middlewares/MulterConfigPDF.js";
 
 const router = express.Router();
 /**
@@ -49,7 +51,8 @@ router.post("/updatePerfil", protegerRuta, upload.single("imagen"), updatePerfil
 //     body("password").trim().escape().notEmpty().withMessage("La password es obligatoria"),
 //     body("confirmar_password").trim().escape().notEmpty().withMessage("La confirmacion de password es obligatoria")
 // ],
-    router.get("/cerrar-sesion", protegerRuta, cerrarSesion);
+router.get("/cerrar-sesion", protegerRuta, cerrarSesion);
+router.post("/vacante/postulacion", protegerRuta, uploadPDF.single("cv"), savePostulaciones);
 
 /**
  * RUTAS DE AREA PUBLICA

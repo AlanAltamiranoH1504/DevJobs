@@ -9,6 +9,18 @@
         </div>
     </div>
 {{/if}}
+{{#if success}}
+    <div class="container-xl">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="bg-success text-white px-3 py-2 text-uppercase rounded-3">
+                    <p class="fw-bold text-center fs-2">¡Te has postulado correctamente!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
+
 <div class="contenido-superior vacante contenedor">
     <div class="caja">
         <p class="etiqueta">Empresa:</p>
@@ -34,15 +46,43 @@
         <div class="vacante-descripcion text-white">
             {{{vacante.descripcion}}}
         </div>
+        {{#if iniciarSesion}}
+            <h2 class="mt-5 mb-2 text-uppercase">Inicia Sesión para Postularte a la Vacante</h2>
+            <a href="/devjobs/iniciar-sesion" class="btn btn-azul w-50">Iniciar Sesión</a>
+        {{/if}}
+        {{#if botones}}
+            <h2 class="mt-4 mb-2">Edición de Vacante</h2>
+            <a href="/devjobs/vacante-edicion/{{vacante._id}}" class="btn btn-primary w-50">Editar Vacante</a>
 
-        <h2 class="mt-4 mb-2">Edición de Vacante</h2>
-        <a href="/devjobs/vacante-edicion/{{vacante._id}}" class="btn btn-primary w-50">Editar Vacante</a>
+            <h2 class="mt-4 mb-4">Elimiación de Vacante</h2>
+            <form method="post" action="/devjobs/vacante/delete">
+                <input type="hidden" name="_id" id="_id" value="{{vacante._id}}">
+                <input type="submit" class="btn btn-danger w-50" value="Eliminar Vacante">
+            </form>
+        {{/if}}
 
-        <h2 class="mt-4 mb-4">Elimiación de Vacante</h2>
-        <form method="post" action="/devjobs/vacante/delete">
-            <input type="hidden" name="_id" id="_id" value="{{vacante._id}}">
-            <input type="submit" class="btn btn-danger w-50" value="Eliminar Vacante">
-        </form>
+        {{#if fromCV}}
+            <h2 class="mt-4 mb-2">Postulate a la Vacante</h2>
+            <form method="post"  class="default-form" action="/devjobs/vacante/postulacion" enctype="multipart/form-data">
+                <input type="hidden" name="user_id" id="user_id" value="{{usuario._id}}">
+                <input type="hidden" name="vacante_id" id="vacante_id" value="{{vacante._id}}">
+                <div class="campo">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Ingresa tu nombre" required>
+                </div>
+                <div class="campo">
+                    <label for="email">Email: </label>
+                    <input type="email" name="email" id="email" placeholder="Email de contacto" required>
+                </div>
+                <div class="campo">
+                    <label class="cv">Adjunta tu CV (PDF):</label>
+                    <input type="file" name="cv" id="cv" class="border bg-white px-3 py-2 rounded-4">
+                </div>
+                <div class="campo">
+                    <input type="submit" class="btn btn-azul" value="Enviar CV">
+                </div>
+            </form>
+        {{/if}}
     </main>
     <aside class="sidebar">
         <h2>Skills del Puesto:</h2>

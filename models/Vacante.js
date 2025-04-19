@@ -45,10 +45,10 @@ const vacanteSchema = new Schema({
         cv: String
     }],
     //Relacion de una Vacante con un Usuario
-    autor: [{
+    autor: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
-    }]
+    }
 });
 
 //Generamos url antes de guardar en la db
