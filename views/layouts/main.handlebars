@@ -52,15 +52,15 @@
                 <h2>{{nombrePagina}}</h2>
 
                 {{#if tagline}}
-                    <p class="tagline">{{tagline}}</p>
+                    <p class="tagline text-uppercase">{{tagline}}</p>
                 {{/if}}
                 {{#if boton}}
                     <a href="/devjobs/vacantes/nueva" class="btn btn-azul">Publicar Nueva Vacante</a>
                 {{/if}}
             </div>
-            <div class="col-md-6 d-flex justify-content-center">
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
                 {{#if imagen}}
-                    <img src='/uploads/perfiles/{{imagen}}' alt="imagen_perfil" class="img-fluid rounded-circle" width="50%">
+                    <img src='/uploads/perfiles/{{imagen}}' alt="imagen_perfil-reclutador" class="img-fluid rounded-circle" width="50%">
                 {{/if}}
             </div>
         </div>

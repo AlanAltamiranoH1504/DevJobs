@@ -112,12 +112,16 @@ const mostrarVacante = async (req, res) => {
     const id = req.params.id;
     const bandera = req.params.bandera;
     const findVacante = await Vacante.findById(id);
+    const autorVacante = await Usuario.findById(findVacante.autor[0]);
+    const pathImgAutorVacante = autorVacante._id + "_" + autorVacante.imagen;
     // console.log("Se pasa la vacante a la vista");
     res.render("vacantes/mostrarVacante", {
         vacante: findVacante.toObject(),
         barra:true,
         bandera,
-        nombrePagina: findVacante.titulo
+        nombrePagina: findVacante.titulo,
+        tagline: `RECLUTADOR: ${autorVacante.nombre}`,
+        imagen: pathImgAutorVacante
     });
 }
 

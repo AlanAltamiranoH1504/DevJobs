@@ -4,6 +4,7 @@ import multer from "multer";
 import Usuario from "../models/Usuario.js";
 import Vacante from "../models/Vacante.js";
 import {usuarioEnSesion} from "../helpers/UsuarioEnSesion.js";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -132,17 +133,15 @@ const updatePerfilReclutador = async (req, res) => {
     }
 
     try {
-        const usuarioActualizar = await Usuario.updateOne({_id}, {
-            $set: {
-                nombre,
-                email,
-                password,
-                imagen: imagenRequest.originalname
-            }
-        });
-        if (!usuarioActualizar) {
-            return;
+        const datosActualizar = {
+            nombre,
+            email,
+            password: await bcrypt.hash(password, 10)
         }
+        if (imagenRequest !== undefined){
+            datosActualizar.imagen = imagenRequest.originalname;
+        }
+        const usuarioPorActualizar = await Usuario.updateOne({_id}, {$set: datosActualizar});
         const usuarioSesion = await usuarioEnSesion(req.cookies.token);
         res.render("auth/edicionPerfil", {
             nombrePagina: "Edita tu perfil de Reclutador",
