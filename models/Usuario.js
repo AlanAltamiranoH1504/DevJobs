@@ -25,7 +25,10 @@ const usuarioSchema = new Schema({
     expira: {
         type: Date
     },
-
+    imagen: {
+        type: String,
+        required: false
+    }
 });
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);

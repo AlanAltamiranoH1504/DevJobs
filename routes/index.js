@@ -24,10 +24,11 @@ import {
     mostrarPanel,
     editarPerfilForm,
     updatePerfilReclutador,
-    cerrarSesion
+    cerrarSesion,
 } from "../controllers/authController.js";
 import {protegerRuta} from "../helpers/Middlewares.js";
 import {body} from "express-validator";
+import {upload} from "../Middlewares/MulterConfig.js";
 
 const router = express.Router();
 /**
@@ -40,7 +41,7 @@ router.get("/vacante-edicion/:id", protegerRuta, editarVacanteForm)
 router.post("/vacante/save-edicion", protegerRuta, saveEdicionVacante);
 router.post("/vacante/delete", protegerRuta, deleteVacante);
 router.get("/editarPerfil", protegerRuta, editarPerfilForm);
-router.post("/updatePerfil", protegerRuta, updatePerfilReclutador);
+router.post("/updatePerfil", protegerRuta, upload.single("imagen"), updatePerfilReclutador);
 // [
 //     body("_id").trim().escape(),
 //     body("nombre").trim().escape().notEmpty().withMessage("El nombre es obligatorio"),

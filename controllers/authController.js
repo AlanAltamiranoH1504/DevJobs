@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import multer from "multer";
 import Usuario from "../models/Usuario.js";
 import Vacante from "../models/Vacante.js";
 import {usuarioEnSesion} from "../helpers/UsuarioEnSesion.js";
@@ -48,7 +49,7 @@ const editarPerfilForm = async (req, res) => {
 }
 
 const updatePerfilReclutador = async (req, res) => {
-    const {_id, nombre, email, password, confirmar_password} = req.body;
+    const {_id, nombre, email, password, confirmar_password, imagen} = req.body;
 
     //Validamos los datos
     if (nombre.trim() === "" || nombre == null) {
@@ -159,9 +160,19 @@ const cerrarSesion = (req, res) => {
     res.redirect("/devjobs");
 }
 
+// const subirImagen = (req, res, next) => {
+//     //Errores en la subida de archivos
+//     upload(req, res, function(error){
+//        if (error instanceof multer.MulterError){
+//             return next();
+//        }
+//     });
+//     next();
+// }
+
 export {
     mostrarPanel,
     editarPerfilForm,
     updatePerfilReclutador,
-    cerrarSesion
+    cerrarSesion,
 }

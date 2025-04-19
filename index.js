@@ -18,6 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import * as path from "node:path";
 import dotenv from "dotenv";
+import multer from "multer";
 dotenv.config();
 
 //Lavantamiento servidor
@@ -40,17 +41,17 @@ app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
 //Habilitacion de sesion para la conexion a la base de datos
 app.use(cookieParser());
-app.use(session({
-    secret: process.env.SECRET,
-    key: process.env.KEY,
-    resave: false,
-    saveUninitialized: false,
-    store: new mongoStore({
-        mongoUrl: process.env.DATABASE,
-        collectionName: 'sessions',
-        ttl: 14 * 24 * 60 * 60,
-    })
-}));
+// app.use(session({
+//     secret: process.env.SECRET,
+//     key: process.env.KEY,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: new mongoStore({
+//         mongoUrl: process.env.DATABASE,
+//         collectionName: 'sessions',
+//         ttl: 14 * 24 * 60 * 60,
+//     })
+// }));
 
 //Habilitacion JSON
 app.use(bodyParser.json());

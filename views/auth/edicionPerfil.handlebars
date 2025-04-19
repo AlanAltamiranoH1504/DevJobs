@@ -6,7 +6,7 @@
     {{#if success}}
         <p class="bg-success px-3 py-2 text-uppercase fw-bold text-center text-white fs-2 my-3 rounded">{{msg}}</p>
     {{/if}}
-    <form action="/devjobs/updatePerfil" method="post" class="default-form">
+    <form action="/devjobs/updatePerfil" method="post" enctype="multipart/form-data" class="default-form">
         <input type="hidden" name="_id" id="_id" value="{{usuario._id}}">
         <div class="campo">
             <label for="nombre">Nombre:</label>
@@ -23,6 +23,10 @@
         <div class="campo">
             <label for="confirmar_password">Confirma tu Password:</label>
             <input type="password" name="confirmar_password" id="confirmar_password" placeholder="Confirma tu password" required>
+        </div>
+        <div class="campo">
+            <label for="imagen">Imagen de Perfil:</label>
+            <input type="file" name="imagen" id="imagen" class="border rounded-4 shadow px-3 py-2 bg-white" placeholder="Tu imagen de perfil">
         </div>
         <div class="campo centrar-horizontal">
             <input type="submit" class="btn btn-azul" value="Actualizar Datos">
