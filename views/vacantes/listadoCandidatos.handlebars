@@ -1,0 +1,19 @@
+<main class="contenedor">
+    <h3 class="text-uppercase my-3 text-center">Los Candidatos de la Vacante Son</h3>
+    {{#if candidatos.length}}
+        {{#each candidatos}}
+            <div class="vacante panel-administracion">
+                <div class="caja">
+                    <h3>Nombre: {{this.nombre}}</h3>
+                    <p>Email: {{this.email}}</p>
+                </div>
+                <div class="caja">
+                    <form action="/devjobs/candidato" method="post">
+                        <input type="hidden" name="nombre_cv" id="nombre_cv" value="{{this.cv}}">
+                        <input type="submit" value="Ver CV" class="btn btn-azul">
+                    </form>
+                </div>
+            </div>
+        {{/each}}
+    {{/if}}
+</main>

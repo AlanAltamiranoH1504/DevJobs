@@ -12,16 +12,20 @@
                 <div class="caja">
                     <h3>{{this.empresa}}</h3>
                     <p class="puesto">{{this.titulo}}</p>
+                    <p class="puesto">Total Candidatos: {{this.candidatos.length}}</p>
                 </div>
                 <div class="centrar-vertical caja">
-                    <a href="/devjobs/candidatos/{{this._id}}" class="btn btn-secondary">Candidatos</a>
+                    <form method="post" action="/devjobs/listarCandidatos">
+                        <input type="hidden" id="id" name="id" value="{{this._id}}">
+                        <input type="submit" class="btn btn-verde" value="Candidatos">
+                    </form>
                 </div>
                 <div class="centrar-vertical caja">
                     <a href="/devjobs/vacante-edicion/{{this._id}}" class="btn btn-amarillo">Editar</a>
                 </div>
                 <div class="centrar-vertical caja">
                     <form method="post" action="/devjobs/vacante/delete">
-                        <input type="hidden" id="_id" name="_id" value="{{this._id}}">
+                        <input type="hidden" id="id" name="id" value="{{this._id}}">
                         <input type="submit" class="btn btn-rojo" value="Eliminar">
                     </form>
                 </div>

@@ -3,6 +3,11 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import Usuario from "../models/Usuario.js";
 import {usuarioEnSesion} from "../helpers/UsuarioEnSesion.js";
+import path from "path";
+import {fileURLToPath} from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
 
 //Rutas del vacanteController
@@ -252,6 +257,24 @@ const savePostulaciones = async (req, res) => {
     }
 }
 
+const listarCandidatos = async (req, res) => {
+    const {id} = req.body;
+    const vacante = await Vacante.findById(id);
+    const arrayCandidatos = vacante.candidatos;
+    res.render("vacantes/listadoCandidatos", {
+        candidatos: arrayCandidatos.toObject(),
+        nombrePagina: "Listado de Candidatos",
+        tagline: "Candidatos postulados",
+        cerrarSesion: true
+    });
+}
+
+const buscarCV = (req, res) => {
+    const {nombre_cv} = req.body;
+    const ruta = path.join(__dirname, "../public/uploads/cv", nombre_cv);
+    res.sendFile(ruta);
+}
+
 export {
     formNuevaVacante,
     saveVacante,
@@ -259,5 +282,7 @@ export {
     editarVacanteForm,
     saveEdicionVacante,
     deleteVacante,
-    savePostulaciones
+    savePostulaciones,
+    listarCandidatos,
+    buscarCV
 }

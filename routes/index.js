@@ -10,7 +10,9 @@ import {
     editarVacanteForm,
     saveEdicionVacante,
     deleteVacante,
-    savePostulaciones
+    savePostulaciones,
+    listarCandidatos,
+    buscarCV
 } from "../controllers/vacanteController.js";
 
 import {
@@ -53,6 +55,8 @@ router.post("/updatePerfil", protegerRuta, upload.single("imagen"), updatePerfil
 // ],
 router.get("/cerrar-sesion", protegerRuta, cerrarSesion);
 router.post("/vacante/postulacion", protegerRuta, uploadPDF.single("cv"), savePostulaciones);
+router.post("/listarCandidatos", protegerRuta, listarCandidatos);
+router.post("/candidato", protegerRuta, buscarCV);
 
 /**
  * RUTAS DE AREA PUBLICA
