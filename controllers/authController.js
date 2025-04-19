@@ -15,6 +15,7 @@ const mostrarPanel = async (req, res) => {
 
     //Vacantes del usuario
     const usuarioSesion = await Usuario.findById(id);
+    const imgPerfil = usuarioSesion._id + "_" + usuarioSesion.imagen;
     if (!usuarioSesion) {
         return;
     }
@@ -27,7 +28,8 @@ const mostrarPanel = async (req, res) => {
         tagline: "Crea y Administra tus Vacantes desde Aqui",
         vacantes: vacantesDeUsuario,
         cerrarSesion: true,
-        nombre: usuarioSesion.nombre
+        nombre: usuarioSesion.nombre,
+        imagen:imgPerfil
     })
 }
 
@@ -49,7 +51,8 @@ const editarPerfilForm = async (req, res) => {
 }
 
 const updatePerfilReclutador = async (req, res) => {
-    const {_id, nombre, email, password, confirmar_password, imagen} = req.body;
+    const {_id, nombre, email, password, confirmar_password} = req.body;
+    const imagenRequest = req.file;
 
     //Validamos los datos
     if (nombre.trim() === "" || nombre == null) {
@@ -133,7 +136,8 @@ const updatePerfilReclutador = async (req, res) => {
             $set: {
                 nombre,
                 email,
-                password
+                password,
+                imagen: imagenRequest.originalname
             }
         });
         if (!usuarioActualizar) {
@@ -159,16 +163,6 @@ const cerrarSesion = (req, res) => {
     res.clearCookie("token");
     res.redirect("/devjobs");
 }
-
-// const subirImagen = (req, res, next) => {
-//     //Errores en la subida de archivos
-//     upload(req, res, function(error){
-//        if (error instanceof multer.MulterError){
-//             return next();
-//        }
-//     });
-//     next();
-// }
 
 export {
     mostrarPanel,
