@@ -9,8 +9,9 @@
                 </div>
                 <div class="caja">
                     <form action="/devjobs/candidato" method="post">
+                        <a href="/uploads/cv/{{this.cv}}" class="text-center">Ver CV (GET)</a>
                         <input type="hidden" name="nombre_cv" id="nombre_cv" value="{{this.cv}}">
-                        <input type="submit" value="Ver CV" class="btn btn-azul">
+                        <input type="submit" value="Ver CV (POST)" class="btn btn-azul">
                     </form>
                 </div>
             </div>

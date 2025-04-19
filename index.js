@@ -3,13 +3,10 @@
  * DevJobs: Plataforma de busqueda y publicacion de trabajos para desarrolladores
  * Autor: Altamirano Hernández Alan - 04 de abril de 2025
  */
-import mongoose from 'mongoose'
 import conexion from './config/db.js'
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
 import bodyParser from "body-parser";
-import mongoStore from 'connect-mongo'
 import {engine} from 'express-handlebars';
 import router from "./routes/index.js";
 import * as helpers from './helpers/handlebars.js';
@@ -18,7 +15,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import * as path from "node:path";
 import dotenv from "dotenv";
-import multer from "multer";
 dotenv.config();
 
 //Lavantamiento servidor
@@ -34,24 +30,13 @@ app.engine("handlebars", engine({
 }));
 app.set("view engine", "handlebars");
 
-//Habilitamos archivos publicos
+//Habilitamos acceso a archivos publicos
 app.use(express.static(path.join(__dirname, "public")));
 //Habilitacion de Bootstrap
 app.use('/static', express.static(path.join(__dirname, 'node_modules')));
 
 //Habilitacion de sesion para la conexion a la base de datos
 app.use(cookieParser());
-// app.use(session({
-//     secret: process.env.SECRET,
-//     key: process.env.KEY,
-//     resave: false,
-//     saveUninitialized: false,
-//     store: new mongoStore({
-//         mongoUrl: process.env.DATABASE,
-//         collectionName: 'sessions',
-//         ttl: 14 * 24 * 60 * 60,
-//     })
-// }));
 
 //Habilitacion JSON
 app.use(bodyParser.json());
