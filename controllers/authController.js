@@ -4,6 +4,7 @@ import multer from "multer";
 import Usuario from "../models/Usuario.js";
 import Vacante from "../models/Vacante.js";
 import {usuarioEnSesion} from "../helpers/UsuarioEnSesion.js";
+import {recuperacionPasswordEmail} from "../helpers/Emails.js";
 import bcrypt from "bcrypt";
 
 dotenv.config();
@@ -158,6 +159,106 @@ const updatePerfilReclutador = async (req, res) => {
     }
 }
 
+const formOlvidePassword = (req, res) => {
+    res.render("usuarios/formOlvidePassword", {
+        nombrePagina: "Reestablece Tu Password",
+        tagline: "Recupera tu cuenta y empieza a publicar tus vacantes",
+        barra:true
+    });
+}
+
+const recuperacionPassword = async (req, res) => {
+    const {email} = req.body;
+
+    const usuarioRegistrado = await Usuario.findOne({email: email});
+    if (!usuarioRegistrado){
+        res.render("usuarios/formOlvidePassword", {
+            nombrePagina: "Restablece Tu Password",
+            tagline: "Recupera tu cuenta y empieza a publicar tus vacantes",
+            barra: true,
+            error: true,
+            msg: "No hay un usuario registrado con ese email"
+        });
+        return;
+    }
+
+    //Envio de email a traves de MailTrap
+    try{
+        recuperacionPasswordEmail(usuarioRegistrado);
+        res.render("usuarios/formOlvidePassword", {
+            nombrePagina: "Restablece Tu Password",
+            tagline: "Recupera tu cuenta y empieza a publicar tus vacantes",
+            barra: true,
+            success: true,
+            msg: "Verifica tu email para la recuperacion de tu password"
+        });
+    }catch (e){
+        console.log("ERROR EN EL ENVIO DE EMAIL PARA RECUPERACION DE PASSWORD");
+        console.log(e.messsage);
+    }
+}
+
+const formCambioPassword = async (req, res) => {
+    try{
+        const token = req.params.token;
+        const contenidoToken = await jwt.verify(token, process.env.JWT_SECRET);
+        const {id, email} = contenidoToken;
+
+        if (!id || !email){
+            res.render("usuarios/formOlvidePassword", {
+                nombrePagina: "Restablece Tu Password",
+                tagline: "Recupera tu cuenta y empieza a publicar tus vacantes",
+                barra: true,
+                error: true,
+                msg: "Token Expirado. Solicita Nuevamente la Recuperacion de tu Password"
+            });
+            return;
+        }
+        res.render("usuarios/formCambioPassword", {
+            nombrePagina: "Restablece Tu Password",
+            tagline: "Recupera tu cuenta y empieza a publicar vacantes",
+            barra: true,
+            email
+        });
+    }catch (e) {
+        res.render("usuarios/formOlvidePassword", {
+            nombrePagina: "Restablece Tu Password",
+            tagline: "Recupera tu cuenta y empieza a publicar tus vacantes",
+            barra: true,
+            error: true,
+            msg: "Token Expirado. Solicita Nuevamente la Recuperacion de tu Password"
+        });
+    }
+}
+
+const cambioPasswordDB = async (req, res) => {
+    const {email, password, confirmPassword} = req.body;
+
+    if (password !== confirmPassword) {
+        res.render("usuarios/formOlvidePassword", {
+            nombrePagina: "Restablece Tu Password",
+            tagline: "Recupera tu cuenta y empieza a publicar tus vacantes",
+            barra: true,
+            error: true,
+            msg: "Las contraseñas no coiciden, vuelve a intentarlo"
+        });
+    }
+
+    const passwordHasheada = await bcrypt.hash(password, 10);
+    const usuarioPorActualizar = await Usuario.updateOne({email: email}, {
+        $set: {
+            password: passwordHasheada
+        }
+    });
+    res.render("usuarios/formOlvidePassword", {
+        nombrePagina: "Restablece Tu Password",
+        tagline: "Recupera tu cuenta y empieza a publicar tus vacantes",
+        barra: true,
+        success: true,
+        msg: "Actualizacion de Password Correcta"
+    });
+}
+
 const cerrarSesion = (req, res) => {
     res.clearCookie("token");
     res.redirect("/devjobs");
@@ -168,4 +269,8 @@ export {
     editarPerfilForm,
     updatePerfilReclutador,
     cerrarSesion,
+    formOlvidePassword,
+    recuperacionPassword,
+    formCambioPassword,
+    cambioPasswordDB
 }

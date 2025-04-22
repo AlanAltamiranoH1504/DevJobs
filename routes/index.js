@@ -28,6 +28,10 @@ import {
     editarPerfilForm,
     updatePerfilReclutador,
     cerrarSesion,
+    formOlvidePassword,
+    recuperacionPassword,
+    formCambioPassword,
+    cambioPasswordDB
 } from "../controllers/authController.js";
 import {protegerRuta} from "../helpers/Middlewares.js";
 import {body} from "express-validator";
@@ -65,6 +69,10 @@ router.get("/", home);
 router.get("/crear-cuenta", formCrearCuenta);
 router.post("/crear-cuenta", saveUsuario);
 router.get("/iniciar-sesion", formInicarSesion);
+router.get("/olvide-password", formOlvidePassword);
+router.post("/email-recuperar-password", recuperacionPassword);
+router.get("/recuperacion/:token", formCambioPassword);
+router.post("/actualizacion-password", cambioPasswordDB);
 router.post("/inicio_sesion", inicioSesion);
 router.get("/confirmar/:token", vistaConfirmarCuenta);
 router.post("/confirmacion_token", confirmacionToken);
