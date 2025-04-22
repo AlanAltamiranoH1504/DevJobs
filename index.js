@@ -1,7 +1,7 @@
 /**
  * → ARCHIVO BASE DE CONFIGURACION
  * DevJobs: Plataforma de busqueda y publicacion de trabajos para desarrolladores
- * Autor: Altamirano Hernández Alan - 04 de abril de 2025
+ * Autor: Altamirano Hernández Alan - 04 de abril de 2025 al 22 de abril de 2025
  */
 import conexion from './config/db.js'
 import express from 'express';
