@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const {Schema} = mongoose;
 import slug from "slug";
 import shortid from "shortid";
@@ -30,11 +31,11 @@ const vacanteSchema = new Schema({
         required: true
     },
     descripcion: {
-        type:String,
+        type: String,
         trim: true,
         required: true
     },
-    url : {
+    url: {
         type: String,
         lowercase: true,
     },
@@ -52,12 +53,16 @@ const vacanteSchema = new Schema({
 });
 
 //Generamos url antes de guardar en la db
-vacanteSchema.pre("save", function(next){
+vacanteSchema.pre("save", function (next) {
     //Creamos url
     const url = slug(this.titulo);
     this.url = `${url}-${shortid.generate()}`;
     next();
 });
+
+//Generacion de indices
+vacanteSchema.index({titulo: "text"});
+vacanteSchema.index({empresa: "text"});
 
 //Exportamos el modelo
 const Vacante = mongoose.model("Vacante", vacanteSchema);

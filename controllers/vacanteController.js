@@ -275,6 +275,22 @@ const buscarCV = (req, res) => {
     res.sendFile(ruta);
 }
 
+const buscarVacante = async (req, res) => {
+    const query = req.body.q;
+    const vacantes = await Vacante.find({
+        $text: {
+            $search: query
+        }
+    }).lean();
+    res.render("home", {
+        nombrePagina: "DevJobs",
+        tagline: `Resultados para la busqueda: ${query}`,
+        barra: true,
+        boton: true,
+        vacantes
+    });
+}
+
 export {
     formNuevaVacante,
     saveVacante,
@@ -284,5 +300,6 @@ export {
     deleteVacante,
     savePostulaciones,
     listarCandidatos,
-    buscarCV
+    buscarCV,
+    buscarVacante
 }

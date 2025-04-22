@@ -12,7 +12,8 @@ import {
     deleteVacante,
     savePostulaciones,
     listarCandidatos,
-    buscarCV
+    buscarCV,
+    buscarVacante
 } from "../controllers/vacanteController.js";
 
 import {
@@ -78,5 +79,6 @@ router.get("/confirmar/:token", vistaConfirmarCuenta);
 router.post("/confirmacion_token", confirmacionToken);
 router.get("/vacante/:id", mostrarVacante);
 router.get("/vacante/:id/:bandera", mostrarVacante);
+router.post("/buscador", buscarVacante);
 
 export default router;
