@@ -14,6 +14,7 @@ import {fileURLToPath} from "url"
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import * as path from "node:path";
+import createHttpError from "http-errors";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -44,6 +45,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //Uso de Routers
 app.use("/devjobs", router)
-
+//Error 404 pagina no existente
+app.use((req, res, next) => {
+    next(createHttpError(404, "Recurso no encontrado"));
+});
+//Administracion de errores
+app.use((error, req, res, next) => {
+    const errorVista = error.message;
+    const status = error.status || 500;
+    //Mandamos vista de error
+    res.render("error", {
+        errorVista,
+        status
+    })
+});
 
 
